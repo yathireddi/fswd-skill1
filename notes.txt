@@ -1,0 +1,127 @@
+====================================================
+  GIT VERSION CONTROL LAB - NOTES & COMMANDS
+====================================================
+
+PREREQUISITES:
+  - Git installed (git --version)
+  - GitHub account ready
+  - Internet connection for remote push
+
+----------------------------------------------------
+TASK 1: Initialize Git Repository
+----------------------------------------------------
+Commands:
+  mkdir git-lab-project
+  cd git-lab-project
+  git init
+  git config user.name "Your Name"
+  git config user.email "you@example.com"
+
+Expected Output:
+  Initialized empty Git repository in .../git-lab-project/.git/
+
+----------------------------------------------------
+TASK 2: Create Files & Stage
+----------------------------------------------------
+Commands:
+  # Files already created: Main.java, notes.txt
+  git status
+  git add Main.java notes.txt
+  git status   (should show green "Changes to be committed")
+
+----------------------------------------------------
+TASK 3: Initial Commit
+----------------------------------------------------
+Commands:
+  git commit -m "Initial commit: Add Main.java and notes.txt"
+
+Expected Output:
+  [main (root-commit) abc1234] Initial commit: Add Main.java and notes.txt
+
+----------------------------------------------------
+TASK 4: Connect to GitHub & Push
+----------------------------------------------------
+Steps:
+  1. Go to https://github.com/new
+  2. Create repo named: git-lab-project (do NOT init with README)
+  3. Run these commands:
+
+  git remote add origin https://github.com/YOUR_USERNAME/git-lab-project.git
+  git branch -M main
+  git push -u origin main
+
+----------------------------------------------------
+TASK 5: Create feature-update Branch
+----------------------------------------------------
+Commands:
+  git checkout -b feature-update
+
+  # Edit Main.java: change getFeatureMessage() return value to:
+  #   return "Hello from Feature Branch!";
+
+  git add Main.java
+  git commit -m "feature-update: Updated getFeatureMessage() in Main.java"
+
+----------------------------------------------------
+TASK 6: Create bug-fix Branch
+----------------------------------------------------
+Commands:
+  git checkout main           # Switch back to main first
+  git checkout -b bug-fix
+
+  # Edit Main.java: update calculateSum() method comment
+  # Add: // Applied bug-fix: verified a + b logic is correct
+
+  git add Main.java
+  git commit -m "bug-fix: Verified calculateSum() returns correct result"
+
+----------------------------------------------------
+TASK 7: Merge Both Branches into Main
+----------------------------------------------------
+Commands:
+  git checkout main
+
+  # Merge feature-update first
+  git merge feature-update
+  git log --oneline   (verify merge)
+
+  # Merge bug-fix next
+  git merge bug-fix
+
+----------------------------------------------------
+TASK 8: Resolve Merge Conflict (if any)
+----------------------------------------------------
+If a conflict occurs, Git will show:
+  CONFLICT (content): Merge conflict in Main.java
+  Automatic merge failed; fix conflicts and then commit the result.
+
+Step-by-step resolution:
+  1. Open Main.java — look for conflict markers:
+       <<<<<<< HEAD
+         return "Hello from Main Branch!";
+       =======
+         return "Hello from Feature Branch!";
+       >>>>>>> feature-update
+
+  2. Keep the desired version, delete the markers
+
+  3. Save the file, then:
+       git add Main.java
+       git commit -m "Resolved merge conflict in Main.java"
+
+  4. Verify:
+       git log --oneline --graph --all
+
+----------------------------------------------------
+USEFUL COMMANDS REFERENCE
+----------------------------------------------------
+  git log --oneline --graph --all   → Full branch history
+  git branch -a                     → List all branches
+  git status                        → Current repo status
+  git diff                          → See unstaged changes
+  git stash                         → Temporarily save changes
+  git remote -v                     → View remotes
+
+====================================================
+  END OF LAB NOTES
+====================================================
